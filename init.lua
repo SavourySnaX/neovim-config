@@ -173,7 +173,7 @@ dap.configurations.humphrey = {
                 prompt = 'Select Executable'},function(choice)
                     myVal = choice
                 end)
-            if ( myVal == 1) then
+            if ( myVal == 'Compiler') then
                 return vim.fn.getcwd().."/.out/compiler"
             else
                 return vim.fn.getcwd().."/.out/tests"
