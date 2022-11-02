@@ -26,6 +26,20 @@ require('nvim-web-devicons').setup {
     }
 }
 
+local parser_config = require('nvim-treesitter.parsers').get_parser_configs()
+parser_config.humphrey = {
+    install_info = {
+        url = "https://github.com/SavourySnaX/tree-sitter-humphrey.git",
+        files = {"src/parser.c","src/scanner.c"},
+
+        branch="main",
+        generate_requires_npm=true,
+        requires_generate_from_grammar=true
+    },
+    filetype="humphrey",
+}
+
+
 local lspconfigs = require('lspconfig.configs')
 local lspconfig = require('lspconfig')
 if not lspconfigs.humphrey then
@@ -39,6 +53,12 @@ if not lspconfigs.humphrey then
 end
 
 -- PLUGINS
+require('nvim-treesitter.configs').setup {
+    playground= {
+        enable = true
+    }
+}
+
 require('nvim-tree').setup{}
 require('lualine').setup{
     options = {
@@ -154,6 +174,8 @@ vim.keymap.set("n", "<C-b>", "<cmd>make<CR>")
 
 
 -- DAP
+
+require('nvim-dap-virtual-text').setup()
 
 local dap = require('dap')
 dap.adapters.lldb = {

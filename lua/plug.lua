@@ -43,6 +43,9 @@ return require('packer').startup({function(use)
         requires = { { 'nvim-lua/plenary.nvim' } }
     }
 
+    use ( 'nvim-treesitter/nvim-treesitter' )   -- tree sitter
+    use ( 'nvim-treesitter/playground' )        -- tree sitter playground
+
     use { 'onsails/lspkind.nvim' }              -- LSP icons
 
     use { 'L3MON4D3/LuaSnip' }                  -- Lua Snippets
@@ -56,6 +59,8 @@ return require('packer').startup({function(use)
 
     use { 'mfussenegger/nvim-dap' }             -- debug adapters
     use { 'rcarriga/nvim-dap-ui', requires = { 'mfussenegger/nvim-dap'}}
+    use { 'theHamsta/nvim-dap-virtual-text' }
+    use { 'nvim-telescope/telescope-dap.nvim' }
 end,
 config = {
     package_root = vim.fn.stdpath('config') .. '/site/pack'
