@@ -166,6 +166,15 @@ vim.cmd('hi! LspProperty guibg=NONE guifg=#ACECFE')
     )
   })
 
+  cmp.setup.cmdline(':', {
+      mapping = cmp.mapping.preset.cmdline(),
+      sources = cmp.config.sources({
+          { name = 'path' }
+      }, {
+          { name = 'cmdline' }
+      })
+  })
+
 -- Compile 
 
 vim.opt.errorformat = '%f:%l:%c:%*[\\ ]%t%*[^:]:%m,%E%>Error%*[^:]:%m,%C%*[^-]-->%*[\\ ]\\"%f\\"@%l:%c,%Z'
