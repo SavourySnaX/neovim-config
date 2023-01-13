@@ -61,6 +61,10 @@ return require('packer').startup({function(use)
     use { 'rcarriga/nvim-dap-ui', requires = { 'mfussenegger/nvim-dap'}}
     use { 'theHamsta/nvim-dap-virtual-text' }
     use { 'nvim-telescope/telescope-dap.nvim' }
+
+    use { 'declancm/maximize.nvim',
+        config = function() require('maximize').setup({default_keymaps=true}) end
+    }                                           -- maximise/restore window on leader z
 end,
 config = {
     package_root = vim.fn.stdpath('config') .. '/site/pack'
