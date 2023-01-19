@@ -212,7 +212,7 @@ dap.configurations.humphrey = {
         end,
         cwd = "${workspaceFolder}",
         stopOnEntry=false,
-        args = {},
+        args = {"debug_entry.humphrey","--threads","1","--add","external/Humphrey.System","--add","src/humphreyFiles"},
         runInTerminal = false,
     },
 }
