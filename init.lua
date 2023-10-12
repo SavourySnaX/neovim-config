@@ -10,11 +10,15 @@ require('opts')
 require('keys')
 require('plug')
 
+-- terminal escape
+vim.cmd [[ tnoremap <Esc> <C-\><C-n> ]]
+
 -- Debugging
---vim.lsp.set_log_level('debug')
+vim.lsp.set_log_level('debug')
 
 -- for humphrey
 vim.cmd [[ autocmd BufNewFile,BufRead *.humphrey set filetype=humphrey ]]
+vim.cmd [[ autocmd BufNewFile,BufRead *.humjit set filetype=humjit ]]
 require('nvim-web-devicons').setup {
     override = {
 
@@ -81,7 +85,7 @@ require("nvim-semantic-tokens").setup {
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
 require('lspconfig').omnisharp.setup{}
-require('lspconfig').sumneko_lua.setup{}
+--require('lspconfig').lua_ls.setup{}
 require('lspconfig').csharp_ls.setup{}
 require('lspconfig').humphrey.setup{
     capabilities = capabilities,
@@ -166,14 +170,14 @@ vim.cmd('hi! LspProperty guibg=NONE guifg=#ACECFE')
     )
   })
 
-  cmp.setup.cmdline(':', {
-      mapping = cmp.mapping.preset.cmdline(),
-      sources = cmp.config.sources({
-          { name = 'path' }
-      }, {
-          { name = 'cmdline' }
-      })
-  })
+--  cmp.setup.cmdline(':', {
+--      mapping = cmp.mapping.preset.cmdline(),
+--      sources = cmp.config.sources({
+ --         { name = 'path' }
+--      }, {
+--          { name = 'cmdline' }
+--      })
+--  })
 
 -- Compile 
 
@@ -191,6 +195,42 @@ dap.adapters.lldb = {
     type = 'executable',
     command = '/usr/bin/lldb-vscode-14',
     name = 'lldb'
+}
+
+dap.adapters.cppdbg = {
+    id = 'cppdbg',
+    type='executable',
+    command='/home/snax/BackedUp/Documents/extension/debugAdapters/bin/OpenDebugAD7',
+}
+
+dap.adapters.humjit = {
+    id = 'humjit',
+    type='executable',
+    command='/home/snax/Work/NewHumprey/bootstrap-jit/.out/jit',
+}
+
+dap.configurations.cpp = {
+    {
+        name = 'Launch',
+        type = 'cppdbg',
+        request = 'launch',
+        program = function()
+            return vim.fn.getcwd().."/.out/jit"
+        end,
+        cwd = "${workspaceFolder}",
+    },
+}
+
+dap.configurations.humjit = {
+    {
+        name = 'Launch',
+        type = 'humjit',
+        request = 'launch',
+        program = function()
+            return vim.fn.getcwd().."/test.humjit"
+        end,
+        cwd = "${workspaceFolder}",
+    },
 }
 
 dap.configurations.humphrey = {
@@ -212,7 +252,7 @@ dap.configurations.humphrey = {
         end,
         cwd = "${workspaceFolder}",
         stopOnEntry=false,
-        args = {"debug_entry.humphrey","--threads","1","--add","external/Humphrey.System","--add","src/humphreyFiles"},
+        args = {"debug_entry.humphrey","--threads","1","--add","external/Humphrey.System","--add","src/humphreyFiles","--deps","deps.out","--output","out.out","--dump-symbols"},
         runInTerminal = false,
     },
 }

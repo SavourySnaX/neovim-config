@@ -62,6 +62,8 @@ return require('packer').startup({function(use)
     use { 'theHamsta/nvim-dap-virtual-text' }
     use { 'nvim-telescope/telescope-dap.nvim' }
 
+    use { 'github/copilot.vim' }
+
     use { 'declancm/maximize.nvim',
         config = function() require('maximize').setup({default_keymaps=true}) end
     }                                           -- maximise/restore window on leader z
